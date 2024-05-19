@@ -69,4 +69,4 @@ def translate_message(message):
     # port = int(os.environ.get('PORT', 5000))
     # app.run(host='0.0.0.0', port=port)
 
-bot.polling(non_stop=True)
+bot.polling(none_stop=True, timeout=60, port=8443)
