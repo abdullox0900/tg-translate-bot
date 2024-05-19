@@ -4,6 +4,7 @@ from googletrans import Translator
 from gtts import gTTS
 from flask import Flask, request
 import os
+import time
 
 server = Flask(__name__)
 
@@ -45,6 +46,7 @@ def translate_message(message):
         try:
             # Matnni tarjima qilish
             translation = translator.translate(message.text, src='uz', dest=dest_lang).text
+            time.sleep(5)
             
             # Tarjima qilingan matnni audio formatga o'girish
             # tts = gTTS(text=translation, lang=dest_lang)
