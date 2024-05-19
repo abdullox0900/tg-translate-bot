@@ -47,14 +47,14 @@ def translate_message(message):
             translation = translator.translate(message.text, src='uz', dest=dest_lang).text
             
             # Tarjima qilingan matnni audio formatga o'girish
-            tts = gTTS(text=translation, lang=dest_lang)
-            audio_file = f'translation_{user_id}.mp3'
-            tts.save(audio_file)
+            # tts = gTTS(text=translation, lang=dest_lang)
+            # audio_file = f'translation_{user_id}.mp3'
+            # tts.save(audio_file)
 
             # Tarjima qilingan matn va audio faylni yuborish
             bot.reply_to(message, f"Tarjima ({'Rus' if dest_lang == 'ru' else 'Ingliz'}): {translation}")
-            with open(audio_file, 'rb') as audio:
-                bot.send_audio(message.chat.id, audio)
+            # with open(audio_file, 'rb') as audio:
+            #     bot.send_audio(message.chat.id, audio)
         except Exception as e:
             bot.reply_to(message, f"Tarjima qilishda xatolik: {str(e)}")
     else:
@@ -72,6 +72,6 @@ def webhook():
     return "!", 200
 
 if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8080)))
 
 # bot.polling(none_stop=True, timeout=60, port=8443)
