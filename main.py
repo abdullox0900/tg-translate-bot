@@ -5,6 +5,7 @@ from gtts import gTTS
 from flask import Flask
 import os
 
+server = Flask(__name__)
 
 # Bot token
 TOKEN = '7191614302:AAHzvVvYLngFpRUAoqm-TY8cv88fNxFwGrc'
@@ -59,14 +60,18 @@ def translate_message(message):
     else:
         bot.reply_to(message, "Avval tarjima tilini tanlang. /start buyrug'ini yuboring.")
 
-# app = Flask(__name__)
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
 
-# @app.route('/')
-# def hello():
-#     return "Hello, World!"
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://your_domain.com/' + TOKEN)
+    return "!", 200
 
-# if __name__ == "__main__"
-    # port = int(os.environ.get('PORT', 5000))
-    # app.run(host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
 
-bot.polling(none_stop=True, timeout=60, port=8443)
+# bot.polling(none_stop=True, timeout=60, port=8443)
