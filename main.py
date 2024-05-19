@@ -59,14 +59,14 @@ def translate_message(message):
     else:
         bot.reply_to(message, "Avval tarjima tilini tanlang. /start buyrug'ini yuboring.")
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
-@app.route('/')
-def hello():
-    return "Hello, World!"
+# @app.route('/')
+# def hello():
+#     return "Hello, World!"
 
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+# if __name__ == "__main__"
+    # port = int(os.environ.get('PORT', 5000))
+    # app.run(host='0.0.0.0', port=port)
 
 bot.polling(non_stop=True)
