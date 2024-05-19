@@ -2,7 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from googletrans import Translator
 from gtts import gTTS
-from flask import Flask
+from flask import Flask, request
 import os
 
 server = Flask(__name__)
