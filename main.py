@@ -2,11 +2,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from googletrans import Translator
 from gtts import gTTS
-from flask import Flask, request
-import os
-import time
 
-server = Flask(__name__)
 
 # Bot token
 TOKEN = '7191614302:AAHzvVvYLngFpRUAoqm-TY8cv88fNxFwGrc'
@@ -49,31 +45,17 @@ def translate_message(message):
             time.sleep(5)
             
             # Tarjima qilingan matnni audio formatga o'girish
-            # tts = gTTS(text=translation, lang=dest_lang)
-            # audio_file = f'translation_{user_id}.mp3'
-            # tts.save(audio_file)
+            tts = gTTS(text=translation, lang=dest_lang)
+            audio_file = f'translation_{user_id}.mp3'
+            tts.save(audio_file)
 
             # Tarjima qilingan matn va audio faylni yuborish
             bot.reply_to(message, f"Tarjima ({'Rus' if dest_lang == 'ru' else 'Ingliz'}): {translation}")
-            # with open(audio_file, 'rb') as audio:
-            #     bot.send_audio(message.chat.id, audio)
+            with open(audio_file, 'rb') as audio:
+                bot.send_audio(message.chat.id, audio)
         except Exception as e:
             bot.reply_to(message, f"Tarjima qilishda xatolik: {str(e)}")
     else:
         bot.reply_to(message, "Avval tarjima tilini tanlang. /start buyrug'ini yuboring.")
 
-@server.route('/' + TOKEN, methods=['POST'])
-def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-    return "!", 200
-
-@server.route("/")
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url='https://tg-translate-bot.onrender.com/' + TOKEN)
-    return "!", 200
-
-if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8080)))
-
-# bot.polling(none_stop=True, timeout=60, port=8443)
+bot.polling(non_stop=True)
