@@ -2,6 +2,8 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from googletrans import Translator
 from gtts import gTTS
+from flask import Flask
+import os
 
 
 # Bot token
@@ -57,5 +59,14 @@ def translate_message(message):
     else:
         bot.reply_to(message, "Avval tarjima tilini tanlang. /start buyrug'ini yuboring.")
 
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Hello, World!"
+
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
 
 bot.polling(non_stop=True)
