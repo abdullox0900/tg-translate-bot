@@ -68,7 +68,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://your_domain.com/' + TOKEN)
+    bot.set_webhook(url='https://tg-translate-bot.onrender.com/' + TOKEN)
     return "!", 200
 
 if __name__ == "__main__":
